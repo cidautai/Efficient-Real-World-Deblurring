@@ -21,7 +21,7 @@ Each of these scripts are sketched as the executors of functions defined in othe
 This repository is tested to work with CUDA 12.4, Python 3.10.12 and PyTorch >= 2.3.1. Begin by cloning the repository:
 
 ```
-git clone https://github.com/danifei/RSBlur_Challenge.git
+git clone https://github.com/danifei/Efficient-Real-World-Deblurring.git
 ```
 
 For the installation of the libraries run
