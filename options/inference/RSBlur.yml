@@ -1,0 +1,15 @@
+#### network structures
+network:
+  name: NAFNet
+  img_channels: 3
+  width: 16
+  middle_blk_num: 1
+  enc_blk_nums: [1,1,1,28]
+  dec_blk_nums: [1,1,1,1]
+
+Resize: False
+scale: 1.25
+
+images:
+  results_path: ./results/NAFNet-C16-L28
+

@@ -1,0 +1,69 @@
+#### datasets
+datasets:
+  name: RSBlur # Name of the Dataset used for training (check create_data function for available names)
+  seed: 9 # random seed for reproducibility
+
+  train:
+    train_path: ./data/datasets/RSBlur # training set path
+    n_workers: 8  # per GPU number of workers
+    batch_size_train: [32] # STEP total batch size for each step
+    cropsize: [384]   # STEP size you want to crop (single int for squared, list for rectangular) out as input sample in each step. None for original size.
+    flips: True # whether to use horizontal/vertical flips
+    verbose: True # whether to print the dataset information
+    crop_type: Random # type of crop to be used (Random, Center). If cropsize not None, this parameter is used.
+  val:
+    test_path: ./data/datasets/RSBlur # test set path
+    batch_size_test: 1 # batch size for validation
+
+#### network structures
+network:
+  name: NAFNet # name of the network used. Check create_model function for available names
+  resume_training: False # whether to resume training from a checkpoint
+
+#### network parameters, you may define the names that you want to use in the network. Unused keys will be ignored.
+  img_channels: 3
+  width: 16
+  middle_blk_num: 1
+  enc_blk_nums: [1,1,1,28]
+  dec_blk_nums: [1,1,1,1]
+
+
+#### training settings: learning rate scheme, loss
+train:
+  # parameters of the optimizer
+  lr_initial: !!float 1e-3
+  betas: [0.9, 0.9]
+  weight_decay: !!float 1e-3
+  # parameter of the scheduler
+  lr_scheme: CosineAnnealing
+  lr_gamma: 0.5
+  eta_min: !!float 1e-6
+
+  # IMPORTANT!!! SET STEPS
+  # listed values refer to the value that will be used for each step
+  STEPS: 1 # number of steps of the multi-step training. If only one step is needed, set it to 1. Then only the first values of the lists will be used.
+
+
+  epochs: [100] # STEP number of epochs for each step
+  eval_freq: 50 # frequency of evaluation (in epochs)
+ # loss parameters (the same keys are defined for each loss)
+
+  pixel_flag: [True] # STEP whether to use pixel loss in each step
+  pixel_criterion: l1 # criterion of the loss (l1, l2)
+  pixel_weight: [1.0] # STEP weight of the loss per step
+  pixel_reduction: mean # reduction criterion of the loss (mean, sum, None)
+
+  perceptual_flag: [False]
+  perceptual_criterion: l1
+  perceptual_weight: [0.01]
+  perceptual_reduction: mean
+
+  edge_flag: [False]
+  edge_criterion: l2
+  edge_weight: [50.0]
+  edge_reduction: mean
+
+#### save model
+save:
+  path_resume:   # path to the checkpoint to resume training
+  path_save: ./models/NAFNet-C16-L28_RSBlur.pt # path to save the model

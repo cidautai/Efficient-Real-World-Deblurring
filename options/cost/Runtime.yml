@@ -1,0 +1,11 @@
+#### network configuration keys
+network:
+  name: NAFNet # name of the network used. Check create_model function for available names
+
+#### network parameters, you may define the names that you want to use in the network. Unused keys will be ignored.
+  img_channels: 3
+  out_channels: 3
+  width: 16
+  middle_blk_num: 1
+  enc_blk_nums: [1,1,1,28]
+  dec_blk_nums: [1,1,1,1]
